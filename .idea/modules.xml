@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/freemarker_for_excel/freemarker_for_excel.iml" filepath="$PROJECT_DIR$/freemarker_for_excel/freemarker_for_excel.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring_mybatis Maven Webapp/spring_mybatis.iml" filepath="$PROJECT_DIR$/spring_mybatis Maven Webapp/spring_mybatis.iml" />
     </modules>
   </component>
