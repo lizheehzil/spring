@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sg.sgyfb.core.dao.UserdeptMapper" >
+  <resultMap id="BaseResultMap" type="com.sg.sgyfb.core.bean.Userdept" >
+    <id column="KeyID" property="keyid" jdbcType="VARCHAR" />
+    <result column="UserID" property="userid" jdbcType="VARCHAR" />
+    <result column="DeptID" property="deptid" jdbcType="VARCHAR" />
+    <result column="SchoolID" property="schoolid" jdbcType="VARCHAR" />
+    <result column="IsDelete" property="isdelete" jdbcType="TINYINT" />
+    <result column="AddUserID" property="adduserid" jdbcType="VARCHAR" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyUserID" property="modifyuserid" jdbcType="VARCHAR" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    KeyID, UserID, DeptID, SchoolID, IsDelete, AddUserID, AddTime, ModifyUserID, ModifyTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sg.sgyfb.core.bean.UserdeptExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userdept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from userdept
+    where KeyID = #{keyid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from userdept
+    where KeyID = #{keyid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sg.sgyfb.core.bean.UserdeptExample" >
+    delete from userdept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sg.sgyfb.core.bean.Userdept" >
+    insert into userdept (KeyID, UserID, DeptID, 
+      SchoolID, IsDelete, AddUserID, 
+      AddTime, ModifyUserID, ModifyTime
+      )
+    values (#{keyid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{deptid,jdbcType=VARCHAR}, 
+      #{schoolid,jdbcType=VARCHAR}, #{isdelete,jdbcType=TINYINT}, #{adduserid,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{modifyuserid,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sg.sgyfb.core.bean.Userdept" >
+    insert into userdept
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="keyid != null" >
+        KeyID,
+      </if>
+      <if test="userid != null" >
+        UserID,
+      </if>
+      <if test="deptid != null" >
+        DeptID,
+      </if>
+      <if test="schoolid != null" >
+        SchoolID,
+      </if>
+      <if test="isdelete != null" >
+        IsDelete,
+      </if>
+      <if test="adduserid != null" >
+        AddUserID,
+      </if>
+      <if test="addtime != null" >
+        AddTime,
+      </if>
+      <if test="modifyuserid != null" >
+        ModifyUserID,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="keyid != null" >
+        #{keyid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        #{deptid,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=TINYINT},
+      </if>
+      <if test="adduserid != null" >
+        #{adduserid,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuserid != null" >
+        #{modifyuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sg.sgyfb.core.bean.UserdeptExample" resultType="java.lang.Integer" >
+    select count(*) from userdept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update userdept
+    <set >
+      <if test="record.keyid != null" >
+        KeyID = #{record.keyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        UserID = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptid != null" >
+        DeptID = #{record.deptid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolid != null" >
+        SchoolID = #{record.schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdelete != null" >
+        IsDelete = #{record.isdelete,jdbcType=TINYINT},
+      </if>
+      <if test="record.adduserid != null" >
+        AddUserID = #{record.adduserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addtime != null" >
+        AddTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyuserid != null" >
+        ModifyUserID = #{record.modifyuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null" >
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update userdept
+    set KeyID = #{record.keyid,jdbcType=VARCHAR},
+      UserID = #{record.userid,jdbcType=VARCHAR},
+      DeptID = #{record.deptid,jdbcType=VARCHAR},
+      SchoolID = #{record.schoolid,jdbcType=VARCHAR},
+      IsDelete = #{record.isdelete,jdbcType=TINYINT},
+      AddUserID = #{record.adduserid,jdbcType=VARCHAR},
+      AddTime = #{record.addtime,jdbcType=TIMESTAMP},
+      ModifyUserID = #{record.modifyuserid,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sg.sgyfb.core.bean.Userdept" >
+    update userdept
+    <set >
+      <if test="userid != null" >
+        UserID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        DeptID = #{deptid,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        SchoolID = #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        IsDelete = #{isdelete,jdbcType=TINYINT},
+      </if>
+      <if test="adduserid != null" >
+        AddUserID = #{adduserid,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        AddTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuserid != null" >
+        ModifyUserID = #{modifyuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where KeyID = #{keyid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sg.sgyfb.core.bean.Userdept" >
+    update userdept
+    set UserID = #{userid,jdbcType=VARCHAR},
+      DeptID = #{deptid,jdbcType=VARCHAR},
+      SchoolID = #{schoolid,jdbcType=VARCHAR},
+      IsDelete = #{isdelete,jdbcType=TINYINT},
+      AddUserID = #{adduserid,jdbcType=VARCHAR},
+      AddTime = #{addtime,jdbcType=TIMESTAMP},
+      ModifyUserID = #{modifyuserid,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where KeyID = #{keyid,jdbcType=VARCHAR}
+  </update>
+</mapper>

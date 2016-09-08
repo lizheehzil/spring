@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!-- 配置缓存管理器 -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<!-- 指定ehcache 的配置文件 -->
+		<property name="cacheManagerConfigFile" value="classpath:config/shiro/ehcache.xml" />
+	</bean>
+
+	<!-- 配置shiro的 SecurityManager -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="realm" ref="myRealm" />
+	</bean>
+
+	<!--配置Bean 后置处理器: 会自动的调用 和Spring整合后 各个组件的生命周期方法 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<!-- 使 Shiro 的注解起作用, Shiro 的注解表示在方法上  注解方法如果是标注在controller层 则需要将配置 配置在mvc配置文件中-->
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		depends-on="lifecycleBeanPostProcessor" />
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+	
+	
+	<!-- 配置 ShiroFilter bean:改bean的Id 必须和 web.xml 文件中配置的Shiro filter 的name一致 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        
+        <property name="loginUrl" value="/index.jsp"/>
+        <property name="successUrl" value="/success.shtml"/>
+        <property name="unauthorizedUrl" value="/s/unauthorized"/>
+        <!-- 配置权限验证关系 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- /shro-*=roles[admin] -->
+            </value>
+        </property>
+    </bean>
+</beans>
